@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>（三）深入理解 Redis - List：操作指南和最佳实践 | 香香博客园</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="总有一天，你会活成，自己喜欢的那个模样">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/assets/css/0.styles.77a87fe6.css" as="style"><link rel="preload" href="/assets/js/app.1fb2a33c.js" as="script"><link rel="preload" href="/assets/js/7.a86c7864.js" as="script"><link rel="preload" href="/assets/js/2.ce2c67a1.js" as="script"><link rel="preload" href="/assets/js/1.781b85eb.js" as="script"><link rel="preload" href="/assets/js/52.54096975.js" as="script"><link rel="prefetch" href="/assets/js/10.9512df56.js"><link rel="prefetch" href="/assets/js/11.73d8179e.js"><link rel="prefetch" href="/assets/js/14.056b0e10.js"><link rel="prefetch" href="/assets/js/15.cd681fc6.js"><link rel="prefetch" href="/assets/js/16.a3c276af.js"><link rel="prefetch" href="/assets/js/17.02de2ef5.js"><link rel="prefetch" href="/assets/js/18.f7043fb3.js"><link rel="prefetch" href="/assets/js/19.29f265ab.js"><link rel="prefetch" href="/assets/js/20.d9755c4a.js"><link rel="prefetch" href="/assets/js/21.98d3c112.js"><link rel="prefetch" href="/assets/js/22.67f0f710.js"><link rel="prefetch" href="/assets/js/23.3b5feebf.js"><link rel="prefetch" href="/assets/js/24.cc7cad3d.js"><link rel="prefetch" href="/assets/js/25.994979d5.js"><link rel="prefetch" href="/assets/js/26.45baef3b.js"><link rel="prefetch" href="/assets/js/27.58ebf53a.js"><link rel="prefetch" href="/assets/js/28.0439f2cb.js"><link rel="prefetch" href="/assets/js/29.17865631.js"><link rel="prefetch" href="/assets/js/3.0994f5fe.js"><link rel="prefetch" href="/assets/js/30.e20f171d.js"><link rel="prefetch" href="/assets/js/31.62cc2c25.js"><link rel="prefetch" href="/assets/js/32.83739adc.js"><link rel="prefetch" href="/assets/js/33.909f1c72.js"><link rel="prefetch" href="/assets/js/34.bf052bde.js"><link rel="prefetch" href="/assets/js/35.23f25a89.js"><link rel="prefetch" href="/assets/js/36.c4386dfd.js"><link rel="prefetch" href="/assets/js/37.7b267585.js"><link rel="prefetch" href="/assets/js/38.2ab3977d.js"><link rel="prefetch" href="/assets/js/39.0170e18a.js"><link rel="prefetch" href="/assets/js/4.d5d89932.js"><link rel="prefetch" href="/assets/js/40.3c91bf86.js"><link rel="prefetch" href="/assets/js/41.b87a08c7.js"><link rel="prefetch" href="/assets/js/42.be08af57.js"><link rel="prefetch" href="/assets/js/43.35061ee0.js"><link rel="prefetch" href="/assets/js/44.ffc12aab.js"><link rel="prefetch" href="/assets/js/45.1699a8fa.js"><link rel="prefetch" href="/assets/js/46.b72a4304.js"><link rel="prefetch" href="/assets/js/47.9dee57a9.js"><link rel="prefetch" href="/assets/js/48.c8c61c23.js"><link rel="prefetch" href="/assets/js/49.652c168b.js"><link rel="prefetch" href="/assets/js/5.781971bb.js"><link rel="prefetch" href="/assets/js/50.feb2b2df.js"><link rel="prefetch" href="/assets/js/51.9cbbf478.js"><link rel="prefetch" href="/assets/js/53.9c6abe2a.js"><link rel="prefetch" href="/assets/js/54.5127a219.js"><link rel="prefetch" href="/assets/js/55.f9c291dd.js"><link rel="prefetch" href="/assets/js/56.55df78bb.js"><link rel="prefetch" href="/assets/js/57.fb471d50.js"><link rel="prefetch" href="/assets/js/58.51718fa4.js"><link rel="prefetch" href="/assets/js/59.d1c091d0.js"><link rel="prefetch" href="/assets/js/6.2db1e707.js"><link rel="prefetch" href="/assets/js/60.819aea6e.js"><link rel="prefetch" href="/assets/js/61.ba115775.js"><link rel="prefetch" href="/assets/js/62.0d630c10.js"><link rel="prefetch" href="/assets/js/8.5dff7613.js"><link rel="prefetch" href="/assets/js/9.1c52c397.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.5c8ee9dc.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.77a87fe6.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>香香博客园</h3> <p class="description" data-v-59e6cb88>总有一天，你会活成，自己喜欢的那个模样</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>Coder香</span>
+          
+        <!---->
+        2024
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/avatar.jpg" alt="香香博客园" class="logo"> <span class="site-name">香香博客园</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/Java 基础篇/" class="nav-link"><i class="undefined"></i>
+  Java 基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Redis 专栏/" class="nav-link"><i class="undefined"></i>
+  Redis 专栏
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spring 基础篇/" class="nav-link"><i class="undefined"></i>
+  Spring 基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/categories/个人经历/" class="nav-link"><i class="undefined"></i>
+  个人经历
+</a></li><li class="dropdown-item"><!----> <a href="/categories/🔒日记集/" class="nav-link"><i class="undefined"></i>
+  🔒日记集
+</a></li><li class="dropdown-item"><!----> <a href="/categories/留言板/" class="nav-link"><i class="undefined"></i>
+  留言板
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MySQL 基础篇/" class="nav-link"><i class="undefined"></i>
+  MySQL 基础篇
+</a></li></ul></div></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><img src="/avatar.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <h3 class="name" data-v-1fad0c41>
+    Coder香
+  </h3> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>24</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>14</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41><li class="social-item" data-v-1fad0c41><i class="iconfont reco-github" style="color:#f8b26a;" data-v-1fad0c41></i></li><li class="social-item" data-v-1fad0c41><i class="iconfont reco-csdn" style="color:#abbd81;" data-v-1fad0c41></i></li><li class="social-item" data-v-1fad0c41><i class="iconfont reco-juejin" style="color:#abbd81;" data-v-1fad0c41></i></li></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="undefined"></i>
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      分类
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/Java 基础篇/" class="nav-link"><i class="undefined"></i>
+  Java 基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Redis 专栏/" class="nav-link"><i class="undefined"></i>
+  Redis 专栏
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spring 基础篇/" class="nav-link"><i class="undefined"></i>
+  Spring 基础篇
+</a></li><li class="dropdown-item"><!----> <a href="/categories/个人经历/" class="nav-link"><i class="undefined"></i>
+  个人经历
+</a></li><li class="dropdown-item"><!----> <a href="/categories/🔒日记集/" class="nav-link"><i class="undefined"></i>
+  🔒日记集
+</a></li><li class="dropdown-item"><!----> <a href="/categories/留言板/" class="nav-link"><i class="undefined"></i>
+  留言板
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MySQL 基础篇/" class="nav-link"><i class="undefined"></i>
+  MySQL 基础篇
+</a></li></ul></div></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>（三）深入理解 Redis - List：操作指南和最佳实践</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>Coder香</span>
+          
+        <!---->
+        2024
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page" style="padding-right:0;"><section style="display:;"><div class="page-title"><h1 class="title">（三）深入理解 Redis - List：操作指南和最佳实践</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>Coder香</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2023/12/7</span></i> <i class="iconfont reco-eye" data-v-8a445198><span id="/blogs/Redis/Redis3-list.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-8a445198><a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;"></a></span></i> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>Redis</span></i></div></div> <div class="theme-reco-content content__default"><h2 id="redis"><a href="#redis" class="header-anchor">#</a> Redis</h2> <p>大家好，我是香香。</p> <p>前面一节给大家介绍了 Redis 的五大基本数据类型之一的 String 字符串类型，可以说 String 类型是最常用的了，但是我们依旧还是要去学习其他的数据类型，今天我们就来讲解第 2 个数据类型 <strong><code>List</code></strong>。</p> <blockquote><p>之后的每个数据类型的介绍都会开一篇单独的文章详细来聊。</p></blockquote> <h2 id="数据类型-list"><a href="#数据类型-list" class="header-anchor">#</a> 数据类型 List</h2> <p>Redis 中的 List 是一种有序的字符串列表数据类型。它允许在列表的两端进行插入和删除操作，因此可以用于实现队列、栈、消息队列等功能。下面是关于 Redis 中 List 数据类型的一些介绍：</p> <ol><li><p><strong>有序性：</strong> List 中的元素按照插入顺序排列，每个元素都有一个索引值来表示其在列表中的位置。这使得 List 成为一个有序的集合，可以按照插入顺序进行迭代。</p></li> <li><p><strong>双向插入和删除：</strong> List 支持在两端进行插入和删除操作。你可以使用 <code>LPUSH</code> 和 <code>RPUSH</code> 命令分别在列表的左侧和右侧插入元素，使用 <code>LPOP</code> 和 <code>RPOP</code> 命令分别从列表的左侧和右侧删除并返回元素。这使得 List 可以被用作队列（FIFO）和栈（LIFO）的数据结构。</p></li> <li><p><strong>支持重复元素：</strong> List 允许存在重复的元素，相同的元素可以插入到列表的不同位置。这使得 List 可以被用作简单的消息队列，允许多次投递相同的消息。</p></li> <li><p><strong>灵活的操作：</strong> Redis 提供了丰富的命令来对 List 进行操作。除了基本的插入和删除操作外，还可以使用 <code>LINDEX</code> 获取指定位置的元素，使用 <code>LLEN</code> 获取列表的长度，使用 <code>LRANGE</code> 获取指定范围内的元素等。</p></li> <li><p><strong>阻塞操作：</strong> Redis 的 List 还提供了阻塞操作，例如 <code>BLPOP</code> 和 <code>BRPOP</code> 命令可以在列表为空时阻塞，并在有新元素插入时立即返回。这使得 List 可以用作实现高效的消息队列，消费者可以等待新消息的到来。</p></li></ol> <p>Redis 的 List 数据类型提供了一种简单但功能强大的方式来处理有序的数据集合。它不仅可以实现基本的插入和删除操作，还可以支持阻塞操作、重复元素和灵活的数据访问等特性，使其成为在缓存、消息传递和任务调度等场景下常用的数据结构之一。</p> <blockquote><p>下面说一下我们应该如何操作 List 列表：</p></blockquote> <ul><li><strong>lpush（左插入）、lrange（查询集合）、rpush（右插入）:</strong></li></ul> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment">#lpush</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lpush list v1  <span class="token comment">#新增一个集合</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lpush list v2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">2</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lpush list v3
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+<span class="token comment">#lrange</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>  <span class="token comment">#查询list的所有元素值</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v1&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lpush list1 v1 v2 v3 v4 v5  <span class="token comment">#批量添加集合元素</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">5</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list1 <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v5&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;v1&quot;</span>
+<span class="token comment">###这里大家有没有注意到，先进去的会到后面，也就是我们的lpush的意思是左插入，l--left</span>
+<span class="token comment">#rpush</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token number">1</span>  <span class="token comment">#指定查询列表中的元素，从下标零开始，1结束，两个元素</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token number">0</span>  <span class="token comment">#指定查询列表中的唯一元素</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> rpush list rv0  <span class="token comment">#右插入，跟lpush相反，这里添加进去元素是在尾部！</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">4</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lrange list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>  <span class="token comment">#查看集合所有元素</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v1&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;rv0&quot;</span>
+</code></pre></div><h1 id=""><a href="#" class="header-anchor">#</a></h1> <ul><li><strong>lpop（左移除）、rpop（右移除）:</strong></li></ul> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment">#lpop</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v5&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;v1&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lpop list  <span class="token comment">#从头部开始移除第一个元素</span>
+<span class="token string">&quot;v5&quot;</span>
+<span class="token comment">##################</span>
+<span class="token comment">#rpop</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v1&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> rpop list
+<span class="token string">&quot;v1&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>  <span class="token comment">#从尾部开始移除第一个元素</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+</code></pre></div><h1 id="-2"><a href="#-2" class="header-anchor">#</a></h1> <ul><li><strong>lindex（查询指定下标元素）、llen（获取集合长度）:</strong></li></ul> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment">#lindex</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lindex list <span class="token number">1</span>  <span class="token comment">#获取指定下标位置集合的元素，下标从0开始计数</span>
+<span class="token string">&quot;v3&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lindex list <span class="token number">0</span>  <span class="token comment">#相当于java中的indexof</span>
+<span class="token string">&quot;v4&quot;</span>
+<span class="token comment">#llen</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> llen list  <span class="token comment">#获取指定集合的元素长度，相当于java中的length或者size</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+</code></pre></div><h1 id="-3"><a href="#-3" class="header-anchor">#</a></h1> <ul><li><strong>lrem（根据value移除指定的值）:</strong></li></ul> <div class="language-r extra-class"><pre class="language-r"><code><span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lrem list <span class="token number">1</span> v2  <span class="token comment">#移除集合list中的元素是v2的元素1个</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lrem list <span class="token number">0</span> v3 <span class="token comment">#移除集合list中的元素是v2的元素1个,这里的0和1效果是一致的</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">1</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lpush list  v3 v2 v2 v2
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">4</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lrem list <span class="token number">3</span> v2  <span class="token comment">#移除集合list中元素为v2 的‘3’个，这里的参数数量，如果实际中集合元素数量不达标，不会报错，全部移除后返回成功移除后的数量值</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">3</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+</code></pre></div><h1 id="-4"><a href="#-4" class="header-anchor">#</a></h1> <ul><li><strong>ltrim（截取元素）、rpoplpush（移除指定集合中最后一个元素到一个新的集合中）:</strong></li></ul> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment">#ltrim</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lpush list v1 v2 v3 v4
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">4</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v1&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> ltrim list <span class="token number">1</span> <span class="token number">2</span>  <span class="token comment">#通过下标截取指定的长度，这个list已经被改变了，只剩下我们所指定截取后的元素</span>
+OK
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token comment">################</span>
+<span class="token comment">#rpoplpush</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lpush list v1 v2 v3 v4 v5
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">5</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v5&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;v1&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> rpoplpush list newlist  <span class="token comment">#移除list集合中的最后一个元素到新的集合newlist中，返回值是移除的最后一个元素值</span>
+<span class="token string">&quot;v1&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v5&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE newlist <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>  <span class="token comment">#确实存在该newlist集合并且有刚刚移除的元素，证明成功</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v1&quot;</span>
+</code></pre></div><h1 id="-5"><a href="#-5" class="header-anchor">#</a></h1> <ul><li><strong>lset（更新）、linsert:（前后插入）:</strong></li></ul> <div class="language-r extra-class"><pre class="language-r"><code><span class="token comment">#lset</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v5&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;v4&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> 
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lset list <span class="token number">1</span> newV5  <span class="token comment">#更新list集合中下标为‘1’的元素为‘newV5’</span>
+OK
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>  <span class="token comment">#查看证明更新成功</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v5&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;newV5&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token comment">##注意点：</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lset list1 <span class="token number">0</span> vvvv  <span class="token comment">#如果指定的‘集合’不存在，报错</span>
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR no such key
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> lset list <span class="token number">8</span> vvv  <span class="token comment">#如果集合存在，但是指定的‘下标’不存在，报错</span>
+<span class="token punctuation">(</span>error<span class="token punctuation">)</span> ERR index out of range
+<span class="token comment">########################</span>
+<span class="token comment">#linsert</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v5&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;newV5&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LINSERT list after v3 insertv3  <span class="token comment">#在集合中的‘v3’元素 ‘(after)之后’ 加上一个元素</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">5</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v5&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;newV5&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;insertv3&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LINSERT list before v3 insertv3  <span class="token comment">#在集合中的‘v3’元素 ‘(before)之前’ 加上一个元素</span>
+<span class="token punctuation">(</span>integer<span class="token punctuation">)</span> <span class="token number">6</span>
+<span class="token number">127.0</span><span class="token number">.0</span><span class="token number">.1</span><span class="token operator">:</span><span class="token number">6379</span><span class="token operator">&gt;</span> LRANGE list <span class="token number">0</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token number">1</span><span class="token punctuation">)</span> <span class="token string">&quot;v5&quot;</span>
+<span class="token number">2</span><span class="token punctuation">)</span> <span class="token string">&quot;newV5&quot;</span>
+<span class="token number">3</span><span class="token punctuation">)</span> <span class="token string">&quot;insertv3&quot;</span>
+<span class="token number">4</span><span class="token punctuation">)</span> <span class="token string">&quot;v3&quot;</span>
+<span class="token number">5</span><span class="token punctuation">)</span> <span class="token string">&quot;insertv3&quot;</span>
+<span class="token number">6</span><span class="token punctuation">)</span> <span class="token string">&quot;v2&quot;</span>
+</code></pre></div><h1 id="-6"><a href="#-6" class="header-anchor">#</a></h1> <p><strong>总结：</strong></p> <ul><li><p>list 是一种双向链表的结构，可以在头部和尾部进行插入和删除操作，支持对指定下标的元素进行查询和更新操作，也可以根据元素值进行移除和插入操作。</p></li> <li><p>常用的命令包括 lpush、rpush、lpop、rpop、lrange、llen、lrem、ltrim、lset、linsert 等。</p></li></ul> <blockquote><p>需要注意的是，在使用 lset 和 linsert 命令时需要注意集合和下标值是否存在，避免出现错误。</p></blockquote> <p>。</p></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper" style="display:none;"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:0;" data-v-b57cc07c data-v-7dd95ae2></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><canvas id="vuepress-canvas-cursor"></canvas></div></div>
+    <script src="/assets/js/app.1fb2a33c.js" defer></script><script src="/assets/js/7.a86c7864.js" defer></script><script src="/assets/js/2.ce2c67a1.js" defer></script><script src="/assets/js/1.781b85eb.js" defer></script><script src="/assets/js/52.54096975.js" defer></script>
+  </body>
+</html>
