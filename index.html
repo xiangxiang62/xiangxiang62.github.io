@@ -55,6 +55,7 @@
 
         .button-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
             margin-top: 20px;
         }
@@ -68,7 +69,7 @@
             font-size: 1.5em;
             cursor: pointer;
             text-decoration: none;
-            margin: 0 10px; /* 按钮之间的间距 */
+            margin: 10px 0; /* 按钮之间的间距 */
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
@@ -90,11 +91,12 @@
         .tooltip {
             position: relative;
             display: inline-block;
+            margin-top: 10px; /* 给 tooltip 增加上边距 */
         }
 
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 800px; /* 弹窗的宽度，再增加为原来的两倍 */
+            width: 600px; /* 弹窗的宽度，再增加为原来的两倍 */
             background-color: #555;
             color: #fff;
             text-align: center;
@@ -104,7 +106,7 @@
             z-index: 1;
             bottom: 125%; /* 弹窗位置 */
             left: 50%;
-            margin-left: -400px; /* 调整水平居中 */
+            margin-left: -300px; /* 调整水平居中 */
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -129,6 +131,63 @@
         .github-icon:hover {
             color: #000;
         }
+
+        /* 手机端适配 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3em;
+            }
+
+            h3 {
+                font-size: 2em;
+            }
+
+            p {
+                font-size: 1.2em;
+            }
+
+            .button, .button-white {
+                font-size: 1.2em;
+                padding: 10px 20px; /* 调整按钮内边距 */
+            }
+
+            .tooltip .tooltiptext {
+                width: 90vw; /* 弹窗宽度设置为视口宽度的90% */
+                margin-left: -45vw; /* 调整水平居中 */
+            }
+
+            .github-icon {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h3 {
+                font-size: 1.8em;
+            }
+
+            p {
+                font-size: 1em;
+            }
+
+            .button, .button-white {
+                font-size: 1em;
+                padding: 8px 16px; /* 调整按钮内边距 */
+            }
+
+            .tooltip .tooltiptext {
+                width: 80vw; /* 弹窗宽度设置为视口宽度的80% */
+                margin-left: -40vw; /* 调整水平居中 */
+            }
+
+            .github-icon {
+                font-size: 1.2em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -147,7 +206,7 @@
             </div>
         </div>
         <a href="#" class="button">立即下载</a>
-        <a href="https://github.com/your-repo" target="_blank" class="github-icon"><i class="fab fa-github"></i></a> <!-- GitHub 图标 -->
+        <a href="https://github.com/xiangxiang62/" target="_blank" class="github-icon"><i class="fab fa-github"></i></a> <!-- GitHub 图标 -->
     </div>
 
     <script>
