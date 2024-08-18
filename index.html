@@ -97,7 +97,7 @@
 
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 600px; /* 弹窗的宽度，再增加为原来的两倍 */
+            width: 600px; /* 弹窗的宽度 */
             background-color: #555;
             color: #fff;
             text-align: center;
@@ -107,7 +107,7 @@
             z-index: 1;
             bottom: 125%; /* 弹窗位置 */
             left: 50%;
-            margin-left: -300px; /* 调整水平居中 */
+            transform: translateX(-50%); /* 居中对齐 */
             opacity: 0;
             transition: opacity 0.3s;
         }
