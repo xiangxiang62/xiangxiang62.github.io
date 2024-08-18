@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GenJavaCodeByDDL插件官网</title>
+    <title>GenJavaCodeByDDL不止ToJavaCode</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CDN -->
     <style>
         body {
@@ -123,6 +123,27 @@
             border-radius: 5px;
         }
 
+        .tooltip .arrow {
+            position: absolute;
+            top: 50%;
+            width: 0;
+            height: 0;
+            border: 20px solid transparent;
+            cursor: pointer;
+            z-index: 2;
+            transform: translateY(-50%);
+        }
+
+        .tooltip .arrow.left {
+            left: 10px;
+            border-right: 20px solid #555;
+        }
+
+        .tooltip .arrow.right {
+            right: 10px;
+            border-left: 20px solid #555;
+        }
+
         .github-icon {
             font-size: 2em;
             color: #333;
@@ -204,7 +225,10 @@
         <div class="tooltip">
             <a href="#" class="button-white">展示 UI</a>
             <div class="tooltiptext">
-                <img src="https://img.picgo.net/2024/08/18/imagee6df5eac57e4e9e9.png" alt="Preview">
+                <img src="https://img.picgo.net/2024/08/18/-2024-08-18-153913b9afaf7a3acfd741.png" alt="Image 1" class="image-slide">
+                <img src="https://img.picgo.net/2024/08/18/-2024-08-18-153923c361063266f5fc7b.png" alt="Image 2" class="image-slide">
+                <div class="arrow left"></div>
+                <div class="arrow right"></div>
             </div>
         </div>
         <a href="#" class="button">立即下载</a>
@@ -212,9 +236,28 @@
     </div>
 
     <script>
-        // 这是一个示例脚本
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('页面已加载完毕');
+            const slides = document.querySelectorAll('.image-slide');
+            let currentIndex = 0;
+
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.style.display = i === index ? 'block' : 'none';
+                });
+            }
+
+            document.querySelector('.arrow.left').addEventListener('click', () => {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : slides.length - 1;
+                showSlide(currentIndex);
+            });
+
+            document.querySelector('.arrow.right').addEventListener('click', () => {
+                currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
+                showSlide(currentIndex);
+            });
+
+            // Show the first slide initially
+            showSlide(currentIndex);
         });
     </script>
 </body>
