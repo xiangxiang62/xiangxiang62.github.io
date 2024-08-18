@@ -55,8 +55,9 @@
 
         .button-container {
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            flex-wrap: wrap; /* 允许按钮换行 */
             margin-top: 20px;
         }
 
@@ -69,7 +70,7 @@
             font-size: 1.5em;
             cursor: pointer;
             text-decoration: none;
-            margin: 10px 0; /* 按钮之间的间距 */
+            margin: 10px; /* 按钮之间的间距 */
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
@@ -91,7 +92,7 @@
         .tooltip {
             position: relative;
             display: inline-block;
-            margin-top: 10px; /* 给 tooltip 增加上边距 */
+            margin: 0 10px; /* 给 tooltip 增加水平间距 */
         }
 
         .tooltip .tooltiptext {
