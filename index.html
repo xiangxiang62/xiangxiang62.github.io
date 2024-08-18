@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenJavaCodeByDDL不止ToJavaCode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CDN -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom, #b3e5fc, #e3f2fd); /* 浅蓝色上下渐变 */
+        }
+
+        .title-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px; /* 进一步上移整体区域 */
+            padding: 20px; /* 增加内边距 */
+        }
+
+        .title-container img {
+            width: 120px; /* 调整图片宽度 */
+            height: auto; /* 保持图片比例 */
+            border-radius: 15px; /* 圆角处理 */
+            margin-bottom: 5px; /* 图片和标题之间的间距 */
+        }
+
+        h1 {
+            font-size: 4em;
+            color: #333;
+            margin-bottom: 5px; /* 减少标题下方的空白 */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 增加文字阴影 */
+        }
+
+        h3 {
+            font-size: 2.5em;
+            color: #555;
+            margin-top: 5px;
+        }
+
+        p {
+            font-size: 1.5em;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .button, .button-white {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px; /* 增加内边距 */
+            font-size: 1.5em;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 0 10px; /* 按钮之间的间距 */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .button-white {
+            background-color: white;
+            color: #007bff;
+            border: 2px solid #007bff;
+        }
+
+        .button:hover, .button-white:hover {
+            background-color: #0056b3;
+            transform: scale(1.05); /* 鼠标悬停时放大按钮 */
+        }
+
+        .button-white:hover {
+            background-color: #f0f0f0;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 800px; /* 弹窗的宽度，再增加为原来的两倍 */
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px 0; /* 增加内边距 */
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* 弹窗位置 */
+            left: 50%;
+            margin-left: -400px; /* 调整水平居中 */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip .tooltiptext img {
+            width: 100%; /* 弹窗图片宽度 */
+            border-radius: 5px;
+        }
+
+        .github-icon {
+            font-size: 2em;
+            color: #333;
+            margin-left: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .github-icon:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-container">
+        <img src="https://img.picgo.net/2024/08/18/-2024-08-18-0109550089317c37a1e631.png" alt="Logo">
+        <h1>GenCodeByDDL</h1>
+    </div>
+    <h3>不止ToJavaCode</h3>
+    <p>简化您的开发流程，提升效率。</p>
+    <p>立即体验我们的工具。</p>
+    <div class="button-container">
+        <div class="tooltip">
+            <a href="#" class="button-white">展示 UI</a>
+            <div class="tooltiptext">
+                <img src="https://img.picgo.net/2024/08/18/imagee6df5eac57e4e9e9.png" alt="Preview">
+            </div>
+        </div>
+        <a href="#" class="button">立即下载</a>
+        <a href="https://github.com/your-repo" target="_blank" class="github-icon"><i class="fab fa-github"></i></a> <!-- GitHub 图标 -->
+    </div>
+
+    <script>
+        // 这是一个示例脚本
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('页面已加载完毕');
+        });
+    </script>
+</body>
+</html>
