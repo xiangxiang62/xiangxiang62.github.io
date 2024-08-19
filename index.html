@@ -1,264 +1,540 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GenJavaCodeByDDL官网</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome CDN -->
+    <title>genCodeByDDL 插件官网</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
             margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1b1b1b;
+            color: #ffffff;
+        }
+
+        .container {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
-            background: linear-gradient(to bottom, #b3e5fc, #e3f2fd); /* 浅蓝色上下渐变 */
+            padding: 20px 50px;
         }
 
-        .title-container {
+        .logo {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            margin-top: 10px; /* 进一步上移整体区域 */
-            padding: 20px; /* 增加内边距 */
         }
 
-        .title-container img {
-            width: 120px; /* 调整图片宽度 */
-            height: auto; /* 保持图片比例 */
-            border-radius: 15px; /* 圆角处理 */
-            margin-bottom: 5px; /* 图片和标题之间的间距 */
+        .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
         }
 
-        h1 {
-            font-size: 4em;
-            color: #333;
-            margin-bottom: 5px; /* 减少标题下方的空白 */
-            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* 文字下方阴影 */
-        }
-
-        h3 {
-            font-size: 2.5em;
-            color: #555;
-            margin-top: 5px;
-        }
-
-        p {
-            font-size: 1.5em;
-            color: #666;
-            margin: 10px 0;
-        }
-
-        .button-container {
+        .nav {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap; /* 允许按钮换行 */
-            margin-top: 20px;
+            gap: 30px;
+            font-size: 16px;
         }
 
-        .button, .button-white {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 12px 25px; /* 增加内边距 */
-            font-size: 1.5em;
-            cursor: pointer;
+        .nav a {
+            color: #ffffff;
             text-decoration: none;
-            margin: 10px; /* 按钮之间的间距 */
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .button-white {
-            background-color: white;
-            color: #007bff;
-            border: 2px solid #007bff;
-        }
-
-        .button:hover, .button-white:hover {
-            background-color: #0056b3;
-            transform: scale(1.05); /* 鼠标悬停时放大按钮 */
-        }
-
-        .button-white:hover {
-            background-color: #f0f0f0;
-        }
-
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            margin: 0 10px; /* 给 tooltip 增加水平间距 */
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 60vw; /* 弹窗的宽度，根据屏幕宽度自适应 */
-            max-width: 600px; /* 最大宽度 */
-            background-color: #555;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 10px 0; /* 增加内边距 */
-            position: absolute;
-            z-index: 1;
-            bottom: 125%; /* 弹窗位置 */
-            left: calc(50% + 250px); /* 向右移动 250px */
-            transform: translateX(-50%); /* 居中对齐 */
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .tooltip .tooltiptext img {
-            width: 100%; /* 弹窗图片宽度 */
-            border-radius: 5px;
-        }
-
-        .tooltip .arrow {
-            position: absolute;
-            top: 50%;
-            width: 0;
-            height: 0;
-            border: 20px solid transparent;
-            cursor: pointer;
-            z-index: 2;
-            transform: translateY(-50%);
-        }
-
-        .tooltip .arrow.left {
-            left: 10px;
-            border-right: 20px solid #555;
-        }
-
-        .tooltip .arrow.right {
-            right: 10px;
-            border-left: 20px solid #555;
-        }
-
-        .github-icon {
-            font-size: 2em;
-            color: #333;
-            margin-left: 10px;
             transition: color 0.3s ease;
         }
 
-        .github-icon:hover {
-            color: #000;
+        .nav a:hover {
+            color: #aaaaaa;
         }
 
-        /* 手机端适配 */
+        .content {
+            padding: 100px 50px;
+        }
+
+        .section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .text-content {
+            max-width: 500px;
+        }
+
+        .text-content h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .text-content p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .features {
+            margin-bottom: 40px;
+        }
+
+        .features p {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .features img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .buttons a {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn {
+            background-color: #4a57f5;
+        }
+
+        .download-btn:hover {
+            background-color: #3947d4;
+        }
+
+        .video-btn {
+            background-color: transparent;
+            border: 1px solid #ffffff;
+        }
+
+        .video-btn:hover {
+            background-color: #ffffff;
+            color: #1b1b1b;
+        }
+
+        .carousel {
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-image {
+            width: 100%;
+            flex: 0 0 100%;
+        }
+
+        .carousel-control {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 10px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        .image-content img {
+            max-width: 500px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title img {
+            margin-left: 10px;
+            width: 24px;
+            height: 24px;
+        }
+
+        .section-description {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .card-section {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .card-section h2 {
+            font-size: 28px;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 300px;
+            text-align: left;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .card .logo {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .faq-section {
+            text-align: center;
+            margin: 80px 50px;
+        }
+
+        .faq-section h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+
+        .accordion {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .accordion-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .accordion-item h3 {
+            font-size: 18px;
+            cursor: pointer;
+            margin: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-item p {
+            font-size: 16px;
+            margin: 10px 0 0;
+            display: none;
+        }
+
+        .accordion-item.active p {
+            display: block;
+        }
+
+        .accordion-item.active h3 {
+            color: #4a57f5;
+        }
+
+        /* 媒体查询 - 适配手机端 */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 3em;
+            .container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
             }
 
-            h3 {
-                font-size: 2em;
+            .nav {
+                flex-direction: column;
+                gap: 10px;
+                font-size: 14px;
             }
 
-            p {
-                font-size: 1.2em;
+            .nav a {
+                padding: 10px 0;
             }
 
-            .button, .button-white {
-                font-size: 1.2em;
-                padding: 10px 20px; /* 调整按钮内边距 */
+            .content {
+                padding: 50px 20px;
             }
 
-            .tooltip .tooltiptext {
-                width: 80vw; /* 弹窗宽度设置为视口宽度的80% */
-                margin-left: -40vw; /* 调整水平居中 */
+            .section {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                margin-bottom: 40px;
             }
 
-            .github-icon {
-                font-size: 1.5em;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2.5em;
+            .text-content {
+                max-width: 100%;
             }
 
-            h3 {
-                font-size: 1.8em;
+            .text-content h1 {
+                font-size: 28px;
             }
 
-            p {
-                font-size: 1em;
+            .text-content p {
+                font-size: 14px;
             }
 
-            .button, .button-white {
-                font-size: 1em;
-                padding: 8px 16px; /* 调整按钮内边距 */
+            .features p {
+                font-size: 16px;
             }
 
-            .tooltip .tooltiptext {
-                width: 90vw; /* 弹窗宽度设置为视口宽度的90% */
-                margin-left: -45vw; /* 调整水平居中 */
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
             }
 
-            .github-icon {
-                font-size: 1.2em;
+            .buttons a {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            .image-content img {
+                max-width: 100%;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+
+            .section-description {
+                font-size: 16px;
+            }
+
+            .card-section {
+                margin: 40px 20px;
+            }
+
+            .card-section h2 {
+                font-size: 28px;
+            }
+
+            .cards {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .card {
+                max-width: 100%;
+            }
+
+            .user-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .user-info img {
+                margin-bottom: 10px;
+            }
+
+            .faq-section {
+                margin: 40px 20px;
+            }
+
+            .faq-section h2 {
+                font-size: 28px;
+            }
+
+            .accordion-item h3 {
+                font-size: 16px;
+            }
+
+            .accordion-item p {
+                font-size: 14px;
             }
         }
     </style>
 </head>
+
 <body>
-    <div class="title-container">
-        <img src="https://img.picgo.net/2024/08/18/-2024-08-18-0109550089317c37a1e631.png" alt="Logo">
-        <h1>GenCodeByDDL</h1>
+    <div class="container">
+        <div class="logo">
+            <img src="https://pan.imgbed.link/file/104161
+" alt="Logo">
+            <h3>genCodeByDDL 插件</h3>
+        </div>
     </div>
-    <h3>不止ToJavaCode</h3>
-    <p>简化您的开发流程，提升效率。</p>
-    <p>立即体验我们的工具。</p>
-    <div class="button-container">
-        <div class="tooltip">
-            <a href="#" class="button-white">展示 UI</a>
-            <div class="tooltiptext">
-                <img src="https://img.picgo.net/2024/08/18/-2024-08-18-153913b9afaf7a3acfd741.png" alt="Image 1" class="image-slide">
-                <img src="https://img.picgo.net/2024/08/18/-2024-08-18-153923c361063266f5fc7b.png" alt="Image 2" class="image-slide">
-                <div class="arrow left"></div>
-                <div class="arrow right"></div>
+    <br /><br />
+    <div class="content">
+
+        <div class="section">
+            <div class="text-content">
+                <h1>降低重复劳动，提升工作效率</h1>
+                <p>我们的应用为您提供极简的代码生成功能，帮助您更高效地处理编码中的重复任务。轻松编码，实现拖拽式 CRUD，操作简便，功能强大。</p>
+                <div class="features">
+                    <p><img src="https://pan.imgbed.link/file/104171" alt="Feature 1"> 极简界面，易上手</p>
+                    <p><img src="https://pan.imgbed.link/file/104171" alt="Feature 2">一键生成，拒绝复杂操作</p>
+                    <p><img src="https://pan.imgbed.link/file/104171" alt="Feature 3"> 支持多种类型生成随意选择</p>
+                    <p><img src="https://pan.imgbed.link/file/104171" alt="Feature 3"> 具备贴心的帮助事项，助您不翻车</p>
+                </div>
+                <div class="buttons">
+                    <a href="https://f.ws28.cn/f/evm9b0vkgod" class="download-btn">下载插件</a>
+                    <a href="https://space.bilibili.com/507044352?spm_id_from=333.337.0.0" class="video-btn">观看演示视频</a>
+                </div>
+                <br /><br /><br /><br />
+            </div>
+            <div class="image-content">
+                <div class="carousel">
+                    <button class="carousel-control prev">‹</button>
+                    <div class="carousel-images">
+                        <img src="https://pan.imgbed.link/file/104699" alt="Laptop 1" class="carousel-image">
+                        <img src="https://pan.imgbed.link/file/104700" alt="Laptop 2" class="carousel-image">
+                        <img src="https://pan.imgbed.link/file/104710" alt="Laptop 3" class="carousel-image">
+                        <img src="https://pan.imgbed.link/file/104711" alt="Laptop 4" class="carousel-image">
+                    </div>
+                    <button class="carousel-control next">›</button>
+                </div>
             </div>
         </div>
-        <a href="http://111.229.207.54:8888/down/pGiWme9yuTVC.zip" class="button">立即下载</a>
-        <a href="https://github.com/xiangxiang62/" target="_blank" class="github-icon"><i class="fab fa-github"></i></a> <!-- GitHub 图标 -->
-    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const slides = document.querySelectorAll('.image-slide');
-            let currentIndex = 0;
+        <br /><br /><br /><br />
+        <div class="card-section">
+            <h1>都有谁在用？</h1>
+            <br />
+            <div class="cards">
+                <div class="card">
+                    <img src="https://pan.imgbed.link/file/104163" alt="User 2" class="logo">
+                    <p>这款插件真是太棒了！操作简单，功能强大，完全满足了我的需求。</p>
+                    <div class="user-info">
+                        <img src="https://img0.baidu.com/it/u=798565018,324560751&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1724086800&t=4f3d72f945fb185bb8ad6a2a86dfea1f"
+                            alt="User 1 Profile">
+                        <div>
+                            <p><strong>张三</strong></p>
+                            <p>腾迅 - 产品经理</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://pan.imgbed.link/file/104163" alt="User 2" class="logo">
+                    <p>插件大大提高了我的工作效率，尤其是在处理重复工作时。</p>
+                    <div class="user-info">
+                        <img src="https://img2.baidu.com/it/u=1553393148,1573116283&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1724086800&t=ec0253879f3f6e47093ccbebabf32057"
+                            alt="User 2 Profile">
+                        <div>
+                            <p><strong>李四</strong></p>
+                            <p>呵里巴巴 - 设计师</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://pan.imgbed.link/file/104163" alt="User 2" class="logo">
+                    <p>非常满意这款工具，支持多种类型生成功能，个性定制，值得推荐！</p>
+                    <div class="user-info">
+                        <img src="https://img2.baidu.com/it/u=823113703,281743950&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1724086800&t=fd7bd2089275a449527de7f3367b27db"
+                            alt="User 3 Profile">
+                        <div>
+                            <p><strong>王五</strong></p>
+                            <p>字节眺动 - 视频编辑</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            function showSlide(index) {
-                slides.forEach((slide, i) => {
-                    slide.style.display = i === index ? 'block' : 'none';
-                });
-            }
+        <br /><br /><br /><br />
 
-            document.querySelector('.arrow.left').addEventListener('click', () => {
-                currentIndex = (currentIndex > 0) ? currentIndex - 1 : slides.length - 1;
-                showSlide(currentIndex);
-            });
+        <div class="faq-section">
+            <h1>常见问题解答</h1>
+            <br />
+            <div class="accordion">
+                <div class="accordion-item">
+                    <h3>请问我应该怎么使用？ <span>+</span></h3>
+                    <p>下载之后，通过 IDEA Settings plugin 导入插件即安装成功。在 .sql 文件中右键鼠标即可一键使用该插件。</p>
+                </div>
+                <br />
+                <div class="accordion-item">
+                    <h3>请问支持定制化生成吗？ <span>+</span></h3>
+                    <p>界面支持勾选操作以及自定义包名，仅生成自己想要的代码，确保生成代码的合理性。</p>
+                </div>
+                <br />
+                <div class="accordion-item">
+                    <h3>插件的后续功能迭代？ <span>+</span></h3>
+                    <p>后续会将更多的常见代码，常见工具类等纳入生成功能中，供用户自行选择，尽小而全。</p>
+                </div>
 
-            document.querySelector('.arrow.right').addEventListener('click', () => {
-                currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
-                showSlide(currentIndex);
-            });
+                <script>
+                    document.querySelectorAll('.accordion-item h3').forEach(item => {
+                        item.addEventListener('click', () => {
+                            const parent = item.parentElement;
+                            parent.classList.toggle('active');
+                        });
+                    });
 
-            // Show the first slide initially
-            showSlide(currentIndex);
-        });
-    </script>
+                    const prevButton = document.querySelector('.carousel-control.prev');
+                    const nextButton = document.querySelector('.carousel-control.next');
+                    const carouselImages = document.querySelector('.carousel-images');
+                    const images = document.querySelectorAll('.carousel-image');
+
+                    let index = 0;
+
+                    function showImage (newIndex) {
+                        if (newIndex >= images.length) {
+                            index = 0;
+                        } else if (newIndex < 0) {
+                            index = images.length - 1;
+                        } else {
+                            index = newIndex;
+                        }
+                        carouselImages.style.transform = `translateX(-${index * 100}%)`;
+                    }
+
+                    prevButton.addEventListener('click', () => {
+                        showImage(index - 1);
+                    });
+
+                    nextButton.addEventListener('click', () => {
+                        showImage(index + 1);
+                    });
+                </script>
 </body>
+
 </html>
